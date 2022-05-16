@@ -144,8 +144,86 @@ void to_register(infuser &user)
     cout<<"the registration completed successfully"<<endl;
 }
 //--------------------------------------------------------------------------------------------------------------------------------------
-void to_login(infuser &user)
+void to_login()
 {
+    string ID;
+    int n=2;
+    string password;
+id:
+
+    cout<<"please enter your id :";
+    cin>>ID;
+
+    if(!Check_ID(ID))
+    {
+        cout << "The ID is not Exist..." ;
+
+        goto id;
+    }
+
+    string name = mapinfusers[ID].username;
+
+    string getpassword;
+    getpassword= Decrypt(mapinfusers[ID].password);
+
+label:
+
+    cout << "please enter your password :";
+
+    char character;
+    int Check = 0;
+    string try1;
+
+    while ((character = getch()) != '\r')
+    {
+
+
+        if (character < 0 || Check % 2 != 0)
+        {
+
+            Check++;
+
+        }
+        else if (character == 8)
+        {
+
+            if (!try1.empty())
+            {
+
+                try1.pop_back();
+
+                cout << character << " " << character;
+
+            }
+        }
+        else
+        {
+
+            try1 += character;
+
+            cout << "*";
+
+        }
+    }
+
+    if (getpassword==try1)
+    {
+        cout <<"\nSuccessful login, welcome "<< name << endl ;
+
+    }
+    else
+    {
+        cout<<"\nFailed login.. Try again.\n";
+        try1="";
+        while(n-- )
+        {
+            cout<<"you have "<<n+1<<" chance to login before ban!!\n";
+            goto label ;
+        }
+        cout<<"\nyou are denied of access to the system \n";
+    }
+
+    Encrypt(mapinfusers[ID].password);
 
 }
 //---------------------------------------------------------------------------------------------------------------------------------------
