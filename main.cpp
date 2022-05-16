@@ -1,4 +1,4 @@
-// FCAI – Programming 1 – 2022 - Assignment 4
+// FCAI â€“ Programming 1 â€“ 2022 - Assignment 4
 // Program Name: xxxxxx.cpp
 // Last Modification Date: xx/xx/xxxx
 // Author1 and ID and Group: xxxxx xxxxx
@@ -18,6 +18,88 @@ struct infuser
 };
 map<string,infuser>mapinfusers;
 //-------------------------------------------------------------------------------------------------------------------------------------
+void to_register()
+{
+    bool ret = false;
+    cout<<"please enter your id :";
+    cin>>user.ID;
+    regex int_format ("[0-9]+") ;
+    if (regex_match(user.ID, int_format) )
+        ret = true ;
+    while (!ret)
+    {
+        cout <<"invalid id please enter again: ";
+        cin>>user.ID;
+        if (regex_match(user.ID, int_format) )
+            ret = true ;
+    }
+    cout<<"please enter your mobile :";
+    cin>>user.mobile;
+    regex mobileformat ("(011|012|010|015)+[0-9]{8}") ;
+    ret = regex_match(user.mobile, mobileformat) ;
+    while(!ret)
+    {
+
+        cout <<"invalid mobile please enter again: ";
+        cin>>user.mobile;
+        ret = regex_match(user.mobile, mobileformat) ;
+    }
+    cout<<"please enter your user name :";
+    cin>>user.username;
+    regex usernameformat ("([a-zA-Z])+[\\_]?([a-zA-Z])+") ;
+    ret = regex_match(user.username, usernameformat) ;
+    while(!ret)
+    {
+
+        cout <<"invalid username please enter again: ";
+        cin>>user.username;
+        ret = regex_match(user.username, usernameformat) ;
+    }
+    cout<<"please enter your email :";
+    cin>>user.email;
+    regex emailformat ("^[a-zA-Z0-9+_.-]+@[a-zA-Z.-]+$") ;
+
+    ret = regex_match(user.email, emailformat) ;
+    while(!ret)
+    {
+
+        cout <<"invalid email please enter again: ";
+        cin>>user.email;
+        ret = regex_match(user.email, emailformat) ;
+
+    }
+    cout<<"";
+    user.password=password();
+
+    Encrypt(user.password);
+
+    fillfile();
+    fillmapinfusers();
+
+    cout<<"the registration completed successfully"<<endl;
+}
+
+bool Check_ID(string ID)
+{
+
+    if (mapinfusers.count(ID) == 1)
+    {
+
+        return true ;
+
+    }
+
+    else
+    {
+
+        return false ;
+
+    }
+}
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------
 void fillmapinfusers()
 {
     fileinformation.open(filename,ios::in | ios::trunc);
